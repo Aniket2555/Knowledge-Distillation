@@ -1,4 +1,3 @@
-import sys
 import os
 import torch
 import torch.nn as nn
@@ -9,9 +8,6 @@ from src.load_data import get_dataloaders
 from src.distill_utils import distillation_loss
 from src.evaluate import evaluate_model
 import csv
-
-# Add root path to system
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Hyperparameters
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -56,10 +52,10 @@ def train(student, teacher, train_loader, test_loader):
 
         print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss:.4f}")
         acc = evaluate_model(student, test_loader, device)
-        log_metrics(epoch, total_loss, acc, "results/metrics.csv")
+        log_metrics(epoch, total_loss, acc, "results/student_metrics.csv")
 
     torch.save(student.state_dict(), student_save_path)
-    print(f"✅ Student model saved to {student_save_path}")
+    print(f"Student model saved to {student_save_path}")
 
 if __name__ == "__main__":
     train_loader, test_loader = get_dataloaders()

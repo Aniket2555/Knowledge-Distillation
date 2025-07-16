@@ -16,5 +16,5 @@ def evaluate_model(model, dataloader, device):
             total += labels.size(0)
 
     acc = 100.0 * correct / total
-    print(f"✅ Accuracy: {acc:.2f}%")
+    print(f"Accuracy: {acc:.2f}%")
     return acc

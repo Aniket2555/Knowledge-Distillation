@@ -1,4 +1,3 @@
-import sys
 import os
 import torch
 import torch.nn as nn
@@ -8,7 +7,6 @@ from src.load_data import get_dataloaders
 from src.evaluate import evaluate_model
 import csv
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 epochs = 20
@@ -43,10 +41,10 @@ def train(model, train_loader, test_loader):
 
         print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss:.4f}")
         acc = evaluate_model(model, test_loader, device)
-        log_metrics(epoch, total_loss, acc, "results/metrics.csv")
+        log_metrics(epoch, total_loss, acc, "results/teacher_metrics.csv")
 
     torch.save(model.state_dict(), save_path)
-    print(f"✅ Teacher model saved to {save_path}")
+    print(f"Teacher model saved to {save_path}")
 
 if __name__ == "__main__":
     train_loader, test_loader = get_dataloaders()
